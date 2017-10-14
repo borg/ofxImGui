@@ -62,7 +62,7 @@ namespace ofxImGui
 		ImGuiIO& io = ImGui::GetIO();
 		io.DisplaySize = ImVec2((float)window.width, (float)window.height);
 	}
-
+/*
 	//--------------------------------------------------------------
 	const char* BaseEngine::getClipboardString()
 	{
@@ -74,7 +74,35 @@ namespace ofxImGui
 	{
 		ofGetWindowPtr()->setClipboardString(text);
 	}
+*/
 
+    /*
+    This is called with correct text (without leading c or v).
+    */
+
+	//--------------------------------------------------------------
+	const char* BaseEngine::getClipboardString()
+	{
+
+        static string str = ofGetWindowPtr()->getClipboardString();
+        if(str.size()){
+            str = &ofGetWindowPtr()->getClipboardString()[0];
+            return str.c_str();
+        }
+
+        return "";
+	}
+    
+
+	//--------------------------------------------------------------
+	void BaseEngine::setClipboardString(const char * text)
+	{
+        static string str = ofToString(text);
+		ofGetWindowPtr()->setClipboardString(str.c_str());
+	}
+    
+    
+    
 	//--------------------------------------------------------------
 	GLuint BaseEngine::loadTextureImage2D(unsigned char * pixels, int width, int height)
 	{

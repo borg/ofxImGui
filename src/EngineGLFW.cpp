@@ -304,10 +304,21 @@ namespace ofxImGui
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
 		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 	}
-
+    
+    /*
+    Seems GLFW is calling cmd key super, but imgui isn't checking for super for copy paste 
+    */
 	//--------------------------------------------------------------
 	void EngineGLFW::onKeyPressed(ofKeyEventArgs& event) {
 		int key = event.keycode;
+        //cout<<key<<" "<<GLFW_KEY_LEFT_CONTROL<<" "<<GLFW_KEY_RIGHT_CONTROL<<" GLFW_KEY_LEFT_SUPER: "<<GLFW_KEY_LEFT_SUPER<<endl;
+        //Apple cmd left = 343
+        //Apple cntrl = GLFW_KEY_LEFT_CONTROL = 341
+        //Apple GLFW_KEY_RIGHT_CONTROL = 345
+        //Apple cmd right = 347
+        //Apple shift left = 340
+        //Apple shift right = 344
+        
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[key] = true;
 
@@ -315,7 +326,9 @@ namespace ofxImGui
 		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
 		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
-
+        
+        
+        
 		if (key < GLFW_KEY_ESCAPE)
 		{
 			io.AddInputCharacter((unsigned short)event.codepoint);
